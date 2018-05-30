@@ -1,0 +1,8 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
+{% if beta %}
+  <strong>{{ beta.beta_text }} </strong>
+{% else %}
+  <p>No routes are available.</p>
+{% endif %}

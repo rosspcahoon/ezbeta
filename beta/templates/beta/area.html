@@ -1,0 +1,12 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
+{% if location %}
+  <ul>
+  {% for area in location.area_set.all %}
+    <li><a href="{% url 'beta:route' area.id %}">{{ area.area_name }}</a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No areas are available.</p>
+{% endif %}

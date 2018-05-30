@@ -1,0 +1,12 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
+{% if route.beta_set.all %}
+  <ul>
+  {% for beta in route.beta_set.all %}
+    <li><a href="{% url 'beta:beta_detail' beta.id %}">{{ beta.beta_name }}</a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No betas are available.</p>
+{% endif %}
