@@ -1,10 +1,10 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
-{% if area.route_set.all %}
+{% if route_list %}
   <ul>
-  {% for route in area.route_set.all %}
-    <li><a href="{% url 'beta:beta'  route.id %}">{{ route.route_name }}</a></li>
+  {% for route in route_list %}
+    <li><a href="{% url 'beta:route'  route.id %}">{{ route.route_name }}</a></li>
   {% endfor %}
   </ul>
 {% else %}

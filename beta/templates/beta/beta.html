@@ -1,12 +1,21 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
-{% if route.beta_set.all %}
-  <ul>
-  {% for beta in route.beta_set.all %}
-    <li><a href="{% url 'beta:beta_detail' beta.id %}">{{ beta.beta_name }}</a></li>
-  {% endfor %}
-  </ul>
+{% if set_date <  now %}
+    <ul>
+      <p>Grade: V{{ grade }}</a></p>
+      <p>Rating: {{ rating }}</a></p>
+      <p>Set Date: {{ set_date }}</a></p>
+    </ul>
+  {% if beta_list %}
+    <ul>
+    {% for beta in beta_list %}
+      <li><a href="{% url 'beta:beta_detail' beta.id %}">{{ beta.beta_name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No betas are available.</p>
+  {% endif %}
 {% else %}
-  <p>No betas are available.</p>
+    <p>This route is not set yet.</p>
 {% endif %}

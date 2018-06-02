@@ -16,43 +16,48 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Location.objects.all()
 
-#class LocationView(generic.ListView):
-#    model = Area
-#    template_name = 'beta/area.html'
-#    context_object_name = 'area_list'
+class LocationAreaList(generic.ListView):
+    
+    template_name = 'beta/area.html'
+    context_object_name = 'area_list' 
 
-#    def get_queryset(self):
-#        return Area.objects.filter()
+    def get_queryset(self):
+        self.location = get_object_or_404(Location, pk=self.kwargs['location_id'])
+        return Area.objects.filter(location=self.location)
 
-#class AreaView(generic.ListView):
-#    model = Route
-#    template_name = 'beta/route.html'
-#    context_object_name = 'route_list'
+class AreaRouteList(generic.ListView):
 
-#    def get_queryset(self):
-#        return Route.objects.filter()
+    template_name = 'beta/route.html'
+    context_object_name = 'route_list'
 
-#class RouteView(generic.ListView):
-#    model = Beta
-#    template_name = 'beta/beta.html'
-#    context_object_name = 'beta_list'
+    def get_queryset(self):
+        self.area = get_object_or_404(Area, pk=self.kwargs['area_id'])
+        return Route.objects.filter(area=self.area, set_date__lte=timezone.now())
 
-#    def get_queryset(self):
-#        return Beta.objects.filter()
+#def route_detail(request, route_id):
+#    route = get_object_or_404(Route, pk=route_id, set_date__lte=timezone.now())
+#    return render(request, 'beta/beta.html', {'route': route})
 
-def location_detail(request, location_id):
-    location = get_object_or_404(Location, pk=location_id)
-    return render(request, 'beta/area.html', {'location': location})
+class RouteDetailList(generic.ListView):
 
-def area_detail(request, area_id):
-    area = get_object_or_404(Area, pk=area_id)
-    return render(request, 'beta/route.html', {'area': area})
+    template_name = 'beta/beta.html'
+    context_object_name = 'beta_list'
+    
+    def get_queryset(self):
+        self.route = get_object_or_404(Route, pk=self.kwargs['route_id'])
+        return Beta.objects.filter(route=self.route, set_date__lte=timezone.now())
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['route'] = self.route
+        context['grade'] = self.route.grade
+        context['rating'] = self.route.rating
+        context['set_date'] = self.route.set_date
+        context['now'] = timezone.now()
+        return context
 
-def route_detail(request, route_id):
-    route = get_object_or_404(Route, pk=route_id)
-    return render(request, 'beta/beta.html', {'route': route})
 
 def beta_detail(request, beta_id):
-    beta = get_object_or_404(Beta, pk=beta_id)
+    beta = get_object_or_404(Beta, pk=beta_id, set_date__lte=timezone.now())
     return render(request, 'beta/beta_detail.html', {'beta': beta})
     

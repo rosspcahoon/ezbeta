@@ -41,6 +41,8 @@ class AreaDetailViewTest(TestCase):
 
 
 class RouteDetailViewTests(TestCase):
+    # Need to revist this test. Theoretically, this page can't be hit 
+    # via navigation 
     def test_future_route(self):
         future_route = create_route(route_name='Future route', days=5)
         url = reverse('beta:route', args=(future_route.id,))
