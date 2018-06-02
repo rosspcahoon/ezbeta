@@ -1,6 +1,8 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
+<title> ezbeta: {{ location.location_name }} </title>
+<strong>{{ location.location_name }}</strong>
 {% if area_list %}
   <ul>
   {% for area in area_list %}

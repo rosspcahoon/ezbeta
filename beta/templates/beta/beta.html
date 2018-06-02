@@ -1,11 +1,13 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'beta/style.css' %}" />
+<title> ezbeta: {{ location.location_name }} </title>
+<strong>{{ location.location_name }}: {{area.area_name}}: {{route.route_name}}</strong>
 {% if set_date <  now %}
     <ul>
+      <a>Set Date: {{ set_date }}</a>
       <p>Grade: V{{ grade }}</a></p>
       <p>Rating: {{ rating }}</a></p>
-      <p>Set Date: {{ set_date }}</a></p>
     </ul>
   {% if beta_list %}
     <ul>

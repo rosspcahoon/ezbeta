@@ -24,6 +24,11 @@ class LocationAreaList(generic.ListView):
     def get_queryset(self):
         self.location = get_object_or_404(Location, pk=self.kwargs['location_id'])
         return Area.objects.filter(location=self.location)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['location'] = self.location
+        return context
 
 class AreaRouteList(generic.ListView):
 
@@ -33,10 +38,12 @@ class AreaRouteList(generic.ListView):
     def get_queryset(self):
         self.area = get_object_or_404(Area, pk=self.kwargs['area_id'])
         return Route.objects.filter(area=self.area, set_date__lte=timezone.now())
-
-#def route_detail(request, route_id):
-#    route = get_object_or_404(Route, pk=route_id, set_date__lte=timezone.now())
-#    return render(request, 'beta/beta.html', {'route': route})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['area'] = self.area
+        context['location'] = self.area.location
+        return context
 
 class RouteDetailList(generic.ListView):
 
@@ -49,6 +56,8 @@ class RouteDetailList(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['location'] = self.route.area.location
+        context['area'] = self.route.area
         context['route'] = self.route
         context['grade'] = self.route.grade
         context['rating'] = self.route.rating
