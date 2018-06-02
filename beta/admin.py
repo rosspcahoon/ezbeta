@@ -19,8 +19,15 @@ class LocationAdmin(admin.ModelAdmin):
     ]
     inlines = [AreaInline]
 
+class AreaAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,                       {'fields': ['area_name', 'area_desc']}),
+        ('Geographical Information', {'fields': ['longitude', 'latitude']}),
+    ]
+    inlines = [RouteInline]
+
 admin.site.register(Location, LocationAdmin)
-admin.site.register(Area)
+admin.site.register(Area, AreaAdmin)
 admin.site.register(Route)
 admin.site.register(Beta)
 
