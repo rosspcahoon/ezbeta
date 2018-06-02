@@ -11,9 +11,9 @@ class Location(models.Model):
     This will include long/lat coordinates, and will be able to be searched
     by proximity '''
     location_name = models.CharField(max_length=50, default='Missing location name')
+    location_desc = models.CharField(max_length=500, default='')
     longitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
-    location_desc = models.CharField(max_length=500, default='')
 
     def __str__(self):
         return self.location_name
@@ -25,6 +25,8 @@ class Area(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     area_name = models.CharField(max_length=50, default='')
     area_desc = models.CharField(max_length=500, default='')
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
     def __str__(self):
         return self.area_name
 
@@ -35,8 +37,6 @@ class Route(models.Model):
     setter_name = models.CharField(max_length=100, default='')
     grade = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
     set_date = models.DateTimeField('date set', default = timezone.now)
     def __str__(self):
         return self.route_name
